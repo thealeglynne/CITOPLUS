@@ -56,7 +56,7 @@ function HomePage() {
           {/* Botones de WhatsApp y Página Web */}
           <div className="flex justify-center space-x-4 mt-6">
             <a
-              href="https://wa.me/xxxxxxxxxxx"  // Reemplaza con tu número de WhatsApp
+              href="https://wa.me/3123455328"  // Reemplaza con tu número de WhatsApp
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 text-xs bg-green-700 text-white rounded-full hover:bg-green-600 transition-all duration-300"
@@ -64,7 +64,7 @@ function HomePage() {
               WhatsApp
             </a>
             <a
-              href="https://tu-pagina-web.com"  // Reemplaza con tu enlace web
+              href="https://thealeglynne.github.io/GLYNNE-HOME/"  // Reemplaza con tu enlace web
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 text-xs bg-blue-700 text-white rounded-full hover:bg-blue-600 transition-all duration-300"
