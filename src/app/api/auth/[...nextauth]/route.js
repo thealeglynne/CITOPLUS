@@ -1,44 +1,44 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import db from '@/libs/db'
-import bcrypt from 'bcrypt'
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials'; // Corrección de importación
+import prisma from '@/libs/db'; // Asegúrate de tener la configuración de Prisma
+import bcrypt from 'bcrypt';
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password", placeholder: "*****" },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        console.log(credentials)
+      async authorize(credentials) {
+        // Verificar si el usuario existe en la base de datos
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
 
-        const userFound = await db.user.findUnique({
-            where: {
-                email: credentials.email
-            }
-        })
-
-        if (!userFound) throw new Error('No user found')
-
-        console.log(userFound)
-
-        const matchPassword = await bcrypt.compare(credentials.password, userFound.password)
-
-        if (!matchPassword) throw new Error('Wrong password')
-
-        return {
-            id: userFound.id,
-            name: userFound.username,
-            email: userFound.email,
+        if (!user) {
+          console.log("User not found");
+          return null;
         }
+
+        // Verificar si la contraseña es correcta
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+
+        if (!isPasswordValid) {
+          console.log("Incorrect password");
+          return null;
+        }
+
+        // Si todo es correcto, devuelve la información del usuario
+        return { id: user.id, email: user.email };
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET, // Asegúrate de que esté configurado
   pages: {
-    signIn: "/auth/login",
-  }
+    signIn: "/auth/login",  // Página personalizada de inicio de sesión
+  },
 };
 
 const handler = NextAuth(authOptions);

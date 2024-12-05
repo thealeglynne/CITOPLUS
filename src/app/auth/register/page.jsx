@@ -12,7 +12,7 @@ function RegisterPage() {
 
   const onSubmit = handleSubmit(async (data) => {
     if (data.password !== data.confirmPassword) {
-      return alert("Passwords do not match");
+      return alert("Las contraseñas no coinciden");
     }
 
     const res = await fetch("/api/auth/register", {
@@ -32,100 +32,104 @@ function RegisterPage() {
     }
   });
 
-  console.log(errors);
-
   return (
-    <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
-      <form onSubmit={onSubmit} className="w-1/4">
-        <h1 className="text-slate-200 font-bold text-4xl mb-4">Register</h1>
+    <div className="h-[calc(100vh-7rem)] flex justify-center items-center bg-gradient-to-r from-black to-gray-900">
+      <form
+        onSubmit={onSubmit}
+        className="w-full max-w-md p-8 bg-white shadow-2xl rounded-3xl border border-gray-200 transform transition-all duration-500 hover:scale-105"
+      >
+        <h1 className="text-center text-4xl font-bold text-indigo-700 mb-6">
+          Registrarse
+        </h1>
 
-        <label htmlFor="username" className="text-slate-500 mb-2 block text-sm">
-          Username:
+        {/* Username Field */}
+        <label htmlFor="username" className="text-gray-700 text-sm mb-2 block">
+          Nombre de usuario:
         </label>
         <input
           type="text"
           {...register("username", {
             required: {
               value: true,
-              message: "Username is required",
+              message: "El nombre de usuario es obligatorio",
             },
           })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-          placeholder="yourUser123"
+          className="p-4 rounded-lg bg-slate-100 text-gray-800 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="tuUsuario123"
         />
-
         {errors.username && (
-          <span className="text-red-500 text-xs">
-            {errors.username.message}
-          </span>
+          <span className="text-red-500 text-xs">{errors.username.message}</span>
         )}
 
-        <label htmlFor="email" className="text-slate-500 mb-2 block text-sm">
-          Email:
+        {/* Email Field */}
+        <label htmlFor="email" className="text-gray-700 text-sm mb-2 block">
+          Correo electrónico:
         </label>
         <input
           type="email"
           {...register("email", {
             required: {
               value: true,
-              message: "Email is required",
+              message: "El correo electrónico es obligatorio",
             },
           })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-          placeholder="user@email.com"
+          className="p-4 rounded-lg bg-slate-100 text-gray-800 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="usuario@email.com"
         />
         {errors.email && (
           <span className="text-red-500 text-xs">{errors.email.message}</span>
         )}
 
-        <label htmlFor="password" className="text-slate-500 mb-2 block text-sm">
-          Password:
+        {/* Password Field */}
+        <label htmlFor="password" className="text-gray-700 text-sm mb-2 block">
+          Contraseña:
         </label>
         <input
           type="password"
           {...register("password", {
             required: {
               value: true,
-              message: "Password is required",
+              message: "La contraseña es obligatoria",
             },
           })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+          className="p-4 rounded-lg bg-slate-100 text-gray-800 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="********"
         />
         {errors.password && (
-          <span className="text-red-500 text-sm">
-            {errors.password.message}
-          </span>
+          <span className="text-red-500 text-xs">{errors.password.message}</span>
         )}
 
+        {/* Confirm Password Field */}
         <label
           htmlFor="confirmPassword"
-          className="text-slate-500 mb-2 block text-sm"
+          className="text-gray-700 text-sm mb-2 block"
         >
-          Confirm Password:
+          Confirmar contraseña:
         </label>
         <input
           type="password"
           {...register("confirmPassword", {
             required: {
               value: true,
-              message: "Confirm Password is required",
+              message: "Confirmar contraseña es obligatorio",
             },
           })}
-          className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+          className="p-4 rounded-lg bg-slate-100 text-gray-800 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="********"
         />
         {errors.confirmPassword && (
-          <span className="text-red-500 text-sm">
+          <span className="text-red-500 text-xs">
             {errors.confirmPassword.message}
           </span>
         )}
 
-        <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2">
-          Register
+        {/* Submit Button */}
+        <button className="w-full bg-indigo-600 text-white p-3 rounded-lg mt-4 hover:bg-indigo-700 transition-all duration-300">
+          Registrarse
         </button>
       </form>
     </div>
   );
 }
+
 export default RegisterPage;
